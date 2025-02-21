@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hama Beads - Plantillas</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+    <header>
+        <h1>Plantillas Hama Beads</h1>
+    </header>
+    <nav>
+        <ul>
+            <li><a href="#home">Inicio</a></li>
+            <li><a href="#gallery">Galería</a></li>
+            <li><a href="#about">Sobre mí</a></li>
+            <li><a href="#contact">Contacto</a></li>
+        </ul>
+    </nav>
+    <div class="gallery-container">
+        <div class="filters">
+            <button data-filter="all">Todos</button>
+            <button data-filter="animales">Animales</button>
+            <button data-filter="personajes">Personajes</button>
+            <button data-filter="objetos">Objetos</button>
+        </div>
+        <div class="gallery" id="gallery"></div>
+    </div>
+    <footer>
+        <p>© 2025 Hama Beads Plantillas - Todos los derechos reservados</p>
+    </footer>
+
+    <script>
+        const gallery = document.getElementById('gallery');
+    
+        fetch('/api/templates')
+            .then(response => response.json())
+            .then(templates => {
+                templates.forEach(template => {
+                    const item = document.createElement('div');
+                    item.classList.add('gallery-item');
+                    item.dataset.category = template.category;
+                    item.innerHTML = `
+                        <img src="${template.src}" alt="${template.name}">
+                        <div class="overlay">
+                            <h3>${template.name}</h3>
+                            <button>Descargar Patrón</button>
+                        </div>
+                    `;
+                    gallery.appendChild(item);
+                });
+                setupFilters();
+            })
+            .catch(error => console.error('Error al cargar plantillas:', error));
+    
+        function setupFilters() {
+            const filterButtons = document.querySelectorAll('.filters button');
+            const galleryItems = document.querySelectorAll('.gallery-item');
+    
+            filterButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const filter = button.dataset.filter;
+                    galleryItems.forEach(item => {
+                        if (filter === 'all' || item.dataset.category === filter) {
+                            item.style.display = 'block';
+                        } else {
+                            item.style.display = 'none';
+                        }
+                    });
+                });
+            });
+        }
+    </script>
+</body>
+</html>

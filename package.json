@@ -1,0 +1,16 @@
+{
+  "name": "sitio-hama",
+  "version": "1.0.0",
+  "description": "Sitio donde puedes visualizar patrones de pixel art para tus proyectos con Hama Beads. Próximamente se implementará editor de patrones.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.21.2"
+  }
+}
